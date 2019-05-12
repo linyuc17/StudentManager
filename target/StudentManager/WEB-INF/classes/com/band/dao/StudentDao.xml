@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.band.dao.StudentDao">
+    <select id="findStudentById" resultType="Student" parameterType="Integer">
+        select* from student where sno=#{sno}
+    </select>
+    <select id="selectStudentList" resultType="Student" parameterType="Student">
+        select * from(select a.*,rownum rn from (select * from student)
+        a where rownum &lt; #{rowNum}
+        <if test="sno != 0">
+            and sno like concat(#{sno},'%')
+        </if>
+        <if test="sName != null">
+            and sName like concat(#{sName},'%')
+        </if>
+        <if test="address != null">
+            and address like concat(#{address},'%')
+        </if>
+        ) where rn &gt; #{rn}
+        order by sno
+    </select>
+
+    <insert id="addStudent" parameterType="Student">
+        insert into student values(#{sno},#{sName},#{password},#{gender},#{phone},#{address})
+    </insert>
+    <update id="updateStudent" parameterType="Student">
+        update student set sName=#{sName}, gender=#{gender}, phone=#{phone}, address=#{address}
+        where sno=#{sno}
+    </update>
+    <delete id="deleteStudent" parameterType="Integer">
+        delete from student where sno=#{id}
+    </delete>
+    <select id="selectStudentListCount" resultType="Integer" parameterType="student">
+        select count(*) from student
+        <include refid="selectStudentListWhere" />
+    </select>
+    <delete id="deleteStudents" parameterType="Integer[]">
+        delete from student where sno in
+        <foreach collection="array" item="id" index="index" separator="," open="(" close=")">
+            #{id}
+        </foreach>
+    </delete>
+    <sql id="selectStudentListWhere">
+        <where>
+            <if test="sno != 0">
+                sno like concat(#{sno},'%')
+            </if>
+            <if test="sName != null">
+                and sName like concat(#{sName},'%')
+            </if>
+            <if test="address != null">
+                and address like concat(#{address},'%')
+            </if>
+        </where>
+    </sql>
+
+</mapper>
