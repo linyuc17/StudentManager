@@ -1,5 +1,5 @@
 # StudentManager
-oracle数据库+SSM框架做的学生后台信息管理系统
+SSM框架+oracle数据库做的学生后台信息管理系统
 
 主要功能：
 
