@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.band.dao.CourseDao">
+    <select id="findCourseById" resultType="Course" parameterType="Integer">
+        select* from course where course_id=#{course_id}
+    </select>
+    <select id="selectCourseList" resultType="Course" parameterType="Course">
+        select * from(select a.*,rownum rn from (select * from course)
+        a where rownum &lt; #{rowNum}
+        <if test="course_id != 0">
+        and course_id like concat(#{course_id},'%')
+        </if>
+        <if test="course_name != null">
+            and course_name like concat(#{course_name},'%')
+        </if>
+        <if test="teacher_name != null">
+            and teacher_name like concat(#{teacher_name},'%')
+        </if>
+        ) where rn &gt; #{rn}
+        order by course_id
+    </select>
+
+    <insert id="addCourse" parameterType="Course">
+        insert into course values(#{course_id},#{course_name},#{teacher_name},#{course_time},#{course_credit},
+        #{course_nature},#{course_allowance})
+    </insert>
+    <update id="updateCourse" parameterType="Course">
+        update course set course_name=#{course_name}, teacher_name=#{teacher_name}, course_time=#{course_time},
+        course_credit=#{course_credit},course_nature=#{course_nature},course_allowance=#{course_allowance}
+        where course_id=#{course_id}
+    </update>
+    <delete id="deleteCourse" parameterType="Integer">
+        delete from course where course_id=#{id}
+    </delete>
+    <select id="selectCourseListCount" resultType="Integer" parameterType="course">
+        select count(*) from course
+        <include refid="selectCourseListWhere" />
+    </select>
+    <delete id="deleteCourses" parameterType="Integer[]">
+        delete from course where course_id in
+        <foreach collection="array" item="id" index="index" separator="," open="(" close=")">
+            #{id}
+        </foreach>
+    </delete>
+    <sql id="selectCourseListWhere">
+        <where>
+            <if test="course_id != 0">
+                course_id like concat(#{course_id},'%')
+            </if>
+            <if test="course_name != null">
+                and course_name like concat(#{course_name},'%')
+            </if>
+            <if test="teacher_name != null">
+                and teacher_name like concat(#{teacher_name},'%')
+            </if>
+        </where>
+    </sql>
+    <update id="updateAllowance" parameterType="course">
+        update course set course_allowance=#{course_allowance} where course_id=#{course_id}
+    </update>
+    <select id="selectMyCourse" parameterType="Integer" resultType="Selection">
+        select* from selection where course_id in
+        <foreach collection="array" item="id" index="index" separator="," open="(" close=")">
+            #{id}
+        </foreach>
+    </select>
+
+</mapper>

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.band.dao.SelectionDao">
+    <select id="findSelectionById" resultType="Selection" parameterType="Integer">
+        select* from selection where selection_id=#{selection_id}
+    </select>
+    <select id="selectSelectionList" resultType="Selection" parameterType="Selection">
+        select * from(select a.*,rownum rn from (select * from selection)
+        a where rownum &lt; #{rowNum}
+        <if test="sName != null">
+            and sName like concat(#{sName},'%')
+        </if>
+        <if test="course_name != null">
+            and course_name like concat(#{course_name},'%')
+        </if>
+        <if test="selection_status != 3">
+            and selection_status =#{selection_status}
+        </if>
+        ) where rn &gt; #{rn}
+        order by selection_status
+    </select>
+
+    <insert id="addSelection" parameterType="Selection">
+        insert into selection values(#{selection_id},#{sno},#{sName},#{course_id},#{course_name},
+        #{selection_time},#{selection_status})
+    </insert>
+    <update id="updateSelection" parameterType="Selection">
+        update selection set sno=#{sno}, sName=#{sName}, course_id=#{course_id},course_name=#{course_name},
+        selection_time=#{selection_time},selection_status=#{selection_status}
+        where selection_id=#{selection_id}
+    </update>
+    <delete id="deleteSelection" parameterType="Integer">
+        delete from selection where selection_id=#{id}
+    </delete>
+    <select id="selectSelectionListCount" resultType="Integer" parameterType="selection">
+        select count(*) from selection
+        <include refid="selectSelectionListWhere" />
+    </select>
+    <delete id="deleteSelections" parameterType="Integer[]">
+        delete from selection where selection_id in
+        <foreach collection="array" item="id" index="index" separator="," open="(" close=")">
+            #{id}
+        </foreach>
+    </delete>
+    <update id="updateStatus" parameterType="Selection">
+        update selection set selection_status=#{selection_status} where selection_id=#{selection_id}
+    </update>
+    <select id="selectMySelection" parameterType="Selection" resultType="Selection">
+        select* from selection where sName=#{sName}
+    </select>
+    <sql id="selectSelectionListWhere">
+        <where>
+            <if test="sName != null">
+                selection_id like concat(#{sName},'%')
+            </if>
+            <if test="course_name != null">
+                and course_name like concat(#{course_name},'%')
+            </if>
+            <if test="selection_status != null">
+                and selection_status=#{selection_status}
+            </if>
+        </where>
+    </sql>
+
+</mapper>

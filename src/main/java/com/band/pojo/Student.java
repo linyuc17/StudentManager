@@ -1,5 +1,7 @@
 package com.band.pojo;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class Student {
     private int sno;
     private String sName;
@@ -7,9 +9,10 @@ public class Student {
     private Integer gender;
     private String phone;
     private String address;
+    private String photo;
     private Integer rowNum;
     private Integer rn;
-
+    private MultipartFile file;
     public Student(){
     }
     public Student(int sno, String sName, String password, Integer gender, String phone, String address) {
@@ -91,6 +94,22 @@ public class Student {
         this.rn = rn;
     }
 
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
+    }
+
+    public MultipartFile getFile() {
+        return file;
+    }
+
+    public void setFile(MultipartFile file) {
+        this.file = file;
+    }
+
     @Override
     public String toString() {
         return "Student{" +
@@ -100,6 +119,7 @@ public class Student {
                 ", gender=" + gender +
                 ", phone='" + phone + '\'' +
                 ", address='" + address + '\'' +
+                ", photo='" + photo + '\'' +
                 '}';
     }
 }

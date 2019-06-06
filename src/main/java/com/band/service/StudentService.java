@@ -6,11 +6,12 @@ import com.band.utils.Page;
 import java.util.List;
 
 public interface StudentService {
-    public Student findStudentById(Integer id);
-    public Integer selectStudentListCount(Student student);
-    public Page<Student> selectStudentList(Integer page, Integer rows, Integer sno, String sName, String address);
-    public void addStudent(Student student);
-    public void updateStudent(Student student);
-    public void deleteStudent(Integer id);
-    public void deleteStudents(Integer[] ids);
+    Student findStudentById(Integer id);
+    Integer selectStudentListCount(Student student);
+    Page<Student> selectStudentList(Integer page, Integer rows, Integer sno, String sName, String address);
+    void addStudent(Student student);
+    void updateStudent(Student student);
+    void deleteStudent(Integer id);
+    void deleteStudents(Integer[] ids);
+    Student findStudentByName(String sName);
 }

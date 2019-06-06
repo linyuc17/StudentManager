@@ -23,10 +23,10 @@
     </select>
 
     <insert id="addStudent" parameterType="Student">
-        insert into student values(#{sno},#{sName},#{password},#{gender},#{phone},#{address})
+        insert into student values(#{sno},#{sName},#{password},#{gender},#{phone},#{address},#{photo})
     </insert>
     <update id="updateStudent" parameterType="Student">
-        update student set sName=#{sName}, gender=#{gender}, phone=#{phone}, address=#{address}
+        update student set sName=#{sName}, gender=#{gender}, phone=#{phone}, address=#{address}, photo=#{photo}
         where sno=#{sno}
     </update>
     <delete id="deleteStudent" parameterType="Integer">
@@ -55,5 +55,8 @@
             </if>
         </where>
     </sql>
+    <select id="findStudentByName" parameterType="String" resultType="Student">
+        select* from student where sName = #{sName}
+    </select>
 
 </mapper>

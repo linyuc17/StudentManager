@@ -6,11 +6,12 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 public interface StudentDao {
-    public Student findStudentById(Integer sno);
-    public Integer selectStudentListCount(Student student);
-    public List<Student> selectStudentList(Student student);
-    public void addStudent(Student student);
-    public void updateStudent(Student student);
-    public void deleteStudent(Integer id);
-    public void deleteStudents(Integer[] ids);
+    Student findStudentById(Integer sno);
+    Integer selectStudentListCount(Student student);
+    List<Student> selectStudentList(Student student);
+    void addStudent(Student student);
+    void updateStudent(Student student);
+    void deleteStudent(Integer id);
+    void deleteStudents(Integer[] ids);
+    Student findStudentByName(String sName);
 }

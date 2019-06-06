@@ -18,19 +18,19 @@ http://www.springframework.org/schema/context/spring-context-4.3.xsd http://www.
     <mvc:annotation-driven/>
     <!--<mvc:resources mapping="/js/**" location="/js/" />-->
     <mvc:default-servlet-handler />
-    <!--<mvc:interceptors>
+    <mvc:interceptors>
         <mvc:interceptor>
             <mvc:mapping path="/login"/>
-            <mvc:mapping path="/main"/>
             <mvc:mapping path="/logout"/>
-            <mvc:exclude-mapping path="/first"></mvc:exclude-mapping>
-            <bean class="cn.edu.mju.band2.interceptor.LoginInterceptor"/>
+            <!--<mvc:exclude-mapping path="/first"></mvc:exclude-mapping>&ndash;&gt;-->
+            <mvc:mapping path="/student/**" />
+            <mvc:mapping path="/selection/**" />
+            <mvc:mapping path="/course/**" />
+            <bean class="com.band.interceptor.LoginInterceptor"/>
         </mvc:interceptor>
-    </mvc:interceptors>-->
-    <!--<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+    </mvc:interceptors>
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
         <property name="defaultEncoding" value="UTF-8"/>
-        <property name="maxUploadSize" value="20971520"/>
-    </bean>-->
-
-
+        <property name="maxUploadSize" value="209715200"/>
+    </bean>
 </beans>

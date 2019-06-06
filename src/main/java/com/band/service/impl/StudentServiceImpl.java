@@ -69,4 +69,7 @@ public class StudentServiceImpl implements StudentService {
     public void deleteStudents(Integer[] ids) {
         this.studentDao.deleteStudents(ids);
     }
+    public Student findStudentByName(String sName){
+        return this.studentDao.findStudentByName(sName);
+    }
 }
