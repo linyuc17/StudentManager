@@ -10,3 +10,4 @@ SSM框架+oracle数据库做的学生信息管理系统
 3、持久层使用mybatis框架 <br>
 4、日志采用log4j进行日志管理 <br>
 5、使用自定义的NavigationTag分页工具 <br>
+6、拦截器，数据校验
